@@ -3,6 +3,7 @@
 namespace SaKanjo\FilamentEasyTestings\Presets;
 
 use Filament\Forms;
+use Filament\Schemas;
 use Illuminate\Support\Arr;
 
 class EnvPreset extends Preset
@@ -23,14 +24,14 @@ class EnvPreset extends Preset
         );
     }
 
-    public static function schema(): array
+    public static function components(): array
     {
         return [
-            Forms\Components\Section::make(__('Environment variables'))
+            Schemas\Components\Section::make(__('Environment variables'))
                 ->persistCollapsed()
                 ->icon('heroicon-m-information-circle')
                 ->schema([
-                    Forms\Components\Fieldset::make(__('Caching'))
+                    Schemas\Components\Fieldset::make(__('Caching'))
                         ->schema([
                             Forms\Components\Toggle::make('config')
                                 ->default(app()->configurationIsCached())
@@ -53,11 +54,11 @@ class EnvPreset extends Preset
                                 ->disabled(),
                         ]),
 
-                    Forms\Components\Grid::make([
+                    Schemas\Components\Grid::make([
                         'sm' => 2,
                         'md' => 3,
                     ])
-                        ->schema(static::getSchema()),
+                        ->components(static::getSchema()),
                 ]),
         ];
     }

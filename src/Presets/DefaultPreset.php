@@ -26,10 +26,10 @@ class DefaultPreset extends Preset
         }
     }
 
-    public static function schema(): array
+    public static function components(): array
     {
         return collect(static::$presets)
-            ->flatMap(fn (string $preset) => $preset::schema())
+            ->flatMap(fn (string $preset) => $preset::components())
             ->toArray();
     }
 }

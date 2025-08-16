@@ -2,8 +2,8 @@
 
 <p align="center">
     <a href="https://github.com/sakanjo/filament-easy-testings/actions"><img alt="Workflow status" src="https://img.shields.io/github/actions/workflow/status/sakanjo/filament-easy-testings/tests.yml?style=for-the-badge"></a>
-    <a href="https://laravel.com"><img alt="Laravel v11.x" src="https://img.shields.io/badge/Laravel-v11.x-FF2D20?style=for-the-badge&logo=laravel"></a>
-    <a href="https://php.net"><img alt="PHP 8.2" src="https://img.shields.io/badge/PHP-8.2-777BB4?style=for-the-badge&logo=php"></a>
+    <a href="https://laravel.com"><img alt="Laravel v11+" src="https://img.shields.io/badge/Laravel-v11+-FF2D20?style=for-the-badge&logo=laravel"></a>
+    <a href="https://php.net"><img alt="PHP 8.2+" src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php"></a>
 </p>
 
 <p align="center">A Filament plugin to make testing easier.</p>
@@ -72,25 +72,27 @@ You can create your own custom preset by extending the `SaKanjo\FilamentEasyTest
 namespace App\Filament\EasyTestings;
 
 use Filament\Forms;
+use Filament\Schemas;
+use Filament\Actions;
 use Filament\Notifications\Notification;
 use SaKanjo\FilamentEasyTestings\Pages\TestingsPage;
 use SaKanjo\FilamentEasyTestings\Presets\Preset;
 
 class HelloPreset extends Preset
 {
-    public static function schema(): array
+    public static function components(): array
     {
         return [
-            Forms\Components\Section::make('Say hi')
+            Schemas\Components\Section::make('Say hi')
                 ->persistCollapsed()
                 ->icon('heroicon-m-bolt')
-                ->schema([
+                ->components([
                     Forms\Components\TextInput::make('name')
                         ->label('Name')
                         ->required(),
 
-                    Forms\Components\Actions::make([
-                        Forms\Components\Actions\Action::make('submit')
+                    Schemas\Components\Actions::make([
+                        Actions\Action::make('submit')
                             ->action(function (Forms\Get $get, TestingsPage $livewire): void {
                                 $livewire->validateFields(['name']);
                                 $name = $get('name');

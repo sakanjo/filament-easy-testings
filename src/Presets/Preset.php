@@ -21,5 +21,5 @@ abstract class Preset
         //
     }
 
-    abstract public static function schema(): array;
+    abstract public static function components(): array;
 }

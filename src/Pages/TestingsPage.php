@@ -2,23 +2,24 @@
 
 namespace SaKanjo\FilamentEasyTestings\Pages;
 
+use BackedEnum;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Pages\Page;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Htmlable;
 use SaKanjo\FilamentEasyTestings\EasyTestingsPlugin;
 
 /**
- * @property Form $form
+ * @property-read Schema $form
  */
 class TestingsPage extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static ?string $navigationIcon = 'heroicon-m-beaker';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-m-beaker';
 
-    protected static string $view = 'filament-easy-testings::index';
+    protected string $view = 'filament-easy-testings::index';
 
     protected static ?string $slug = 'testings';
 
@@ -53,13 +54,13 @@ class TestingsPage extends Page implements HasForms
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $form): Schema
     {
-        $schema = EasyTestingsPlugin::get()
-            ->getPreset()->schema();
+        $components = EasyTestingsPlugin::get()
+            ->getPreset()->components();
 
         return $form
-            ->schema($schema)
+            ->components($components)
             ->statePath('data');
     }
 }

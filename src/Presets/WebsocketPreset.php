@@ -2,15 +2,18 @@
 
 namespace SaKanjo\FilamentEasyTestings\Presets;
 
+use Filament\Actions;
 use Filament\Forms;
 use Filament\Notifications\Notification;
+use Filament\Schemas;
+use Filament\Schemas\Components\Utilities\Get;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use SaKanjo\FilamentEasyTestings\Pages\TestingsPage;
 
 class WebsocketPreset extends Preset
 {
-    public static function schema(): array
+    public static function components(): array
     {
         /** @var Model $model */
         $model = config('filament-easy-testings.websockets-preset.model');
@@ -24,24 +27,24 @@ class WebsocketPreset extends Preset
             ->pluck($titleAttribute, $user->getKeyName());
 
         return [
-            Forms\Components\Section::make('Websockets')
+            Schemas\Components\Section::make('Websockets')
                 ->persistCollapsed()
                 ->icon('heroicon-m-bolt')
-                ->schema([
+                ->components([
                     Forms\Components\Select::make('user_id')
                         ->required()
                         ->label('Receiver')
                         ->default($user->getKey())
                         ->options($options),
 
-                    Forms\Components\Group::make([
+                    Schemas\Components\Group::make([
                         Forms\Components\TextInput::make('broadcast')
                             ->default("Hello $name")
                             ->required()
                             ->hintAction(
-                                Forms\Components\Actions\Action::make('send')
+                                Actions\Action::make('send')
                                     ->icon('heroicon-m-paper-airplane')
-                                    ->action(function (mixed $state, Forms\Get $get, TestingsPage $livewire) use ($model): void {
+                                    ->action(function (mixed $state, Get $get, TestingsPage $livewire) use ($model): void {
                                         $livewire->validateFields(['user_id', 'broadcast']);
 
                                         $user = $model::query()
@@ -57,9 +60,9 @@ class WebsocketPreset extends Preset
                             ->default("Hello $name")
                             ->required()
                             ->hintAction(
-                                Forms\Components\Actions\Action::make('send')
+                                Actions\Action::make('send')
                                     ->icon('heroicon-m-paper-airplane')
-                                    ->action(function (mixed $state, Forms\Get $get, TestingsPage $livewire) use ($model): void {
+                                    ->action(function (mixed $state, Get $get, TestingsPage $livewire) use ($model): void {
                                         $livewire->validateFields(['user_id', 'notification_with_broadcast']);
 
                                         $user = $model::query()
